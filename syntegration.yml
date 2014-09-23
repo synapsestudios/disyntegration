@@ -1,0 +1,5 @@
+specFiles:
+  - '__spec__/**/*[Ss]pec.js'
+
+applicationPort: 9000
+
