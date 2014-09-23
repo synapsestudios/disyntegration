@@ -11,7 +11,9 @@ function Iframe()
     var isReady;
     var oldBody;
 
-    this.$el[0].onload = function() { isReady = true; }
+    this.$el[0].onload = function() {
+        isReady = true;
+    }
 
     this.setSrc = function (src)
     {
@@ -66,8 +68,6 @@ function Iframe()
 
     this.find = function(selector)
     {
-        console.log(this.$el.contents());
-        console.log(this.$el.find('a.policy-details__link').length);
         return this.$el.contents().find(selector);
     };
 
@@ -143,7 +143,7 @@ function visit(path)
 {
     var iframe = new Iframe();
 
-    iframe.setSrc(document.location.origin + '/' + path)
+    iframe.setSrc(document.location.origin + path)
 
     return iframe;
 }
