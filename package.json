@@ -8,13 +8,14 @@
   },
   "description": "Jasmine Integration Tests",
   "dependencies": {
-    "connect"      : "2.14.3",
-    "execSync"     : "1.0.2",
-    "glob"         : "3.2.9",
-    "http-proxy"   : "1.0.2",
-    "jasmine-core" : "2.0.4",
-    "jquery"       : "2.1.0",
-    "js-yaml"      : "3.0.2",
-    "underscore"   : "1.6.0"
+    "connect"        : "2.14.3",
+    "execSync"       : "1.0.2",
+    "glob"           : "3.2.9",
+    "http-proxy"     : "1.0.2",
+    "jasmine-core"   : "2.0.4",
+    "jasmine-jquery" : "2.0.5",
+    "jquery"         : "2.1.0",
+    "js-yaml"        : "3.0.2",
+    "underscore"     : "1.6.0"
   }
 }

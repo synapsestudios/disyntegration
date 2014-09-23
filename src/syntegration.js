@@ -30,7 +30,7 @@ function Iframe()
         event.initEvent(name, true, false);
 
         return event;
-    }
+    };
 
     var MouseEvent = function(name)
     {
@@ -38,24 +38,24 @@ function Iframe()
         event.initEvent(name, true, false);
 
         return event;
-    }
-
-    var pageContainsText = function(text)
-    {
-        var pageContent = (document.documentElement.textContent || document.documentElement.innerText);
-
-        return (pageContent.indexOf(text) > -1);
     };
 
     this.click = function(selector)
     {
-        console.log(selector);
-        this.find(selector)[0].dispatchEvent(new MouseEvent('click'));
-        this.find(selector)[0].dispatchEvent(new MouseEvent('mousedown'));
-        this.find(selector)[0].dispatchEvent(new MouseEvent('mouseup'));
+        var elements = this.find(selector);
+
+        if (elements.length) {
+            elements[0].dispatchEvent(new MouseEvent('click'));
+            elements[0].dispatchEvent(new MouseEvent('mousedown'));
+            elements[0].dispatchEvent(new MouseEvent('mouseup'));
+
+            if ($(elements[0]).attr('href')) {
+                isReady = false;
+            }
+        }
     };
 
-    this.fillIn = function(selector, text)
+    this.fillField = function(selector, text)
     {
         this.find(selector).val(text);
         this.find(selector)[0].dispatchEvent(new KeyboardEvent('focus'));
@@ -64,6 +64,8 @@ function Iframe()
         this.find(selector)[0].dispatchEvent(new KeyboardEvent('input'));
         this.find(selector)[0].dispatchEvent(new KeyboardEvent('change'));
         this.find(selector)[0].dispatchEvent(new KeyboardEvent('keyup'));
+
+        isReady = false;
     };
 
     this.find = function(selector)
@@ -71,18 +73,18 @@ function Iframe()
         return this.$el.contents().find(selector);
     };
 
-    this.ready = function(fun)
+    this.ready = function(callback)
     {
         var self = this;
 
         if (! isReady) {
-            setTimeout(function() { self.ready(fun) }, 200);
+            setTimeout(function() { self.ready(callback) }, 200);
         } else {
-            fun();
+            callback();
         }
     };
 
-    this.waitFor = function(condition, fun, maxTimeout)
+    this.waitFor = function(condition, callback, maxTimeout)
     {
         var maxTimeout, self;
 
@@ -95,26 +97,21 @@ function Iframe()
         }
 
         if(condition()) {
-            fun();
+            callback();
         } else {
-            setTimeout(function() { self.waitFor(condition, fun, maxTimeout - 100) }, 100);
+            setTimeout(function() { self.waitFor(condition, callback, maxTimeout - 100) }, 100);
         }
-    };
-
-    this.waitForText = function(text, fun, _maxTimeout)
-    {
-        this.waitFor(_.partial(pageContainsText, text), fun, _maxTimeout);
     };
 
     this.onBodyChange = function(done)
     {
         var self = this;
 
-        if(!oldBody) {
+        if (! oldBody) {
             oldBody = this.body();
         }
 
-        if(oldBody == this.body()) {
+        if (oldBody == this.body()) {
             setTimeout(function() { self.onBodyChange(done) }, 200);
         } else {
             oldBody = undefined;
