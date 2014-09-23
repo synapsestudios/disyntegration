@@ -1,0 +1,20 @@
+{
+  "name"       : "syntegration",
+  "license"    : "MIT",
+  "version"    : "0.0.0",
+  "repository" : {
+    "type" : "git",
+    "url"  : "https://github.com/synapsestudios/syntegration.git"
+  },
+  "description": "Jasmine Integration Tests",
+  "dependencies": {
+    "connect"      : "2.14.3",
+    "execSync"     : "1.0.2",
+    "glob"         : "3.2.9",
+    "http-proxy"   : "1.0.2",
+    "jasmine-core" : "2.0.4",
+    "jquery"       : "2.1.0",
+    "js-yaml"      : "3.0.2",
+    "underscore"   : "1.6.0"
+  }
+}

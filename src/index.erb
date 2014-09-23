@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Syntegration Spec Runner</title>
+
+        <link rel="shortcut icon" type="image/png" href="http://localhost:<%= proxyPort %>/node_modules/syntegration/node_modules/jasmine-core/images/jasmine_favicon.png">
+        <link rel="stylesheet" type="text/css" href="http://localhost:<%= proxyPort %>/node_modules/syntegration/node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+
+        <script src="http://localhost:<%= proxyPort %>/node_modules/syntegration/node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="http://localhost:<%= proxyPort %>/node_modules/syntegration/node_modules/underscore/underscore.js"></script>
+
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/syntegration/node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/syntegration/node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/syntegration/node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/syntegration/src/syntegration.js"></script>
+
+        <% _.each(files, function(file) { %>
+            <script type="text/javascript" src="http://localhost:<%= proxyPort %>/<%= file %>"></script>
+        <% }) %>
+    </head>
+
+    <body></body>
+</html>
