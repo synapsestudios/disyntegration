@@ -6,15 +6,23 @@ var system         = require('system');
 var url = 'http://localhost:9001';
 
 system.args.forEach(function(arg, index) {
-    if(index > 0) {
+    if (index > 0) {
         args[arg.split('=')[0].replace(/^--/, '')] = arg.split('=')[1];
     }
 });
 
-console = {
-    log   : function() {},
-    error : function() {}
+if (! args.trace) {
+    console = {
+        log   : function() {},
+        error : function() {}
+    };
 }
+
+var failures = function() {
+    return page.evaluate(function(){
+        return document.getElementsByClassName('failures')[0].innerText;
+    })
+};
 
 var finished = function() {
     return page.evaluate(function() {
@@ -28,15 +36,21 @@ var finished = function() {
     });
 };
 
-var success = function() {
-    return page.evaluate(function(){
-        return document.getElementsByClassName('failed').length == 0;
-    })
-};
-
 var results = function() {
     return page.evaluate(function(){
         return document.getElementsByClassName('bar')[0].innerText;
+    })
+};
+
+var summary = function() {
+    return page.evaluate(function(){
+        return document.getElementsByClassName('summary')[0].innerText;
+    })
+};
+
+var success = function() {
+    return page.evaluate(function(){
+        return document.getElementsByClassName('failed').length == 0;
     })
 };
 
@@ -45,12 +59,14 @@ var process = function() {
         page.render(args.screenshot);
     }
 
-    if(finished()) {
+    if (finished()) {
         phantomConsole.log(results());
+        phantomConsole.log(summary());
 
         if(success()) {
             phantom.exit(0);
         } else {
+            phantomConsole.log(failures());
             phantom.exit(1);
         }
     } else {

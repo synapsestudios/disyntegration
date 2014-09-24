@@ -21,7 +21,7 @@ var server = http.createServer(function(req, res) {
         proxy.web(req, res, { target: 'http://localhost:' + config.appPort });
     } else {
         res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(config.indexHtml({
+        res.write(config.runnerHtml({
             plugins   : config.plugins,
             proxyPort : config.proxyPort,
             specs     : config.specs,

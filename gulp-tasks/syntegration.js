@@ -1,25 +1,23 @@
 var exec  = require('child_process').exec;
 var gulp  = require('gulp');
 var gutil = require('gulp-util');
-var sh    = require('../node_modules/syntegration/node_modules/execSync/index');
+var sh    = require('../node_modules/execSync/index');
 
-var config = require('../node_modules/syntegration/src/config');
+var config = require('../src/config');
 
 gulp.task('syntegration', function() {
     if(config.serverCommand) {
-      exec(config.serverCommand, function(err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-      });
+        exec(config.serverCommand, function(err, stdout, stderr) {
+            console.log(stdout);
+            console.log(stderr);
+        });
     }
 
     sh.run('node node_modules/syntegration/src/server.js');
 });
 
 gulp.task('syntegration:ci', function(cb) {
-    var code, jsProcess, serverProcess, options;
-
-    options = '';
+    var code, jsProcess, headlessOptions, phantomCommand, serverProcess;
 
     if (config.serverCommand) {
         serverProcess = exec(config.serverCommand, function(err, stdout, stderr) {
@@ -33,15 +31,20 @@ gulp.task('syntegration:ci', function(cb) {
         console.log(stderr);
     });
 
+    phantomCommand  = 'phantomjs';
+    phantomCommand += ' --disk-cache=false';
+    phantomCommand += ' --local-to-remote-url-access=true';
+
+    headlessOptions = '';
     if (gutil.env.screenshot) {
-        options += ' --screenshot=' + gutil.env.screenshot;
+        headlessOptions += ' --screenshot=' + gutil.env.screenshot;
     }
 
     if (gutil.env.trace) {
-        options += ' --trace=' + gutil.env.trace;
+        headlessOptions += ' --trace=' + gutil.env.trace;
     }
 
-    code = sh.run('phantomjs node_modules/syntegration/src/headless.js' + options);
+    code = sh.run(phantomCommand + ' node_modules/syntegration/src/headless.js' + headlessOptions);
 
     if (serverProcess) {
         serverProcess.kill();
