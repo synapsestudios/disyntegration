@@ -22,10 +22,10 @@ var server = http.createServer(function(req, res) {
     } else {
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.write(config.indexHtml({
-            plugins       : config.plugins,
-            proxyPort     : config.proxyPort,
-            specs         : config.specs,
-            testInterface : config.testInterface
+            plugins   : config.plugins,
+            proxyPort : config.proxyPort,
+            specs     : config.specs,
+            testMode  : config.testMode
         }));
         res.end();
     }

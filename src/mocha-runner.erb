@@ -10,7 +10,7 @@
         <script src="http://localhost:<%= proxyPort %>/node_modules/syntegration/node_modules/underscore/underscore.js"></script>
 
         <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/mocha/mocha.js"></script>
-        <script type="text/javascript"><script>mocha.setup('<%= testMode %>')</script></script>
+        <script type="text/javascript">mocha.setup('<%= testMode %>');</script>
 
         <!-- Load plugin scripts -->
         <% _.each(plugins, function(file) { %>
@@ -27,6 +27,6 @@
 
     <body>
         <div id="mocha"></div>
-        <script>mocha.run();</script>
+        <script type="text/javascript">mocha.run();</script>
     </body>
 </html>
