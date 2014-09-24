@@ -2,7 +2,8 @@ var args           = {};
 var page           = require('webpage').create();
 var phantomConsole = console;
 var system         = require('system');
-var url            = 'http://localhost:8888';
+
+var url = 'http://localhost:9001';
 
 system.args.forEach(function(arg, index) {
     if(index > 0) {
