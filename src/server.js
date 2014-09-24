@@ -18,17 +18,22 @@ var server = http.createServer(function(req, res) {
     };
 
     if (req.headers.referer && ! req.url.match(/^\/\?$/) && ! req.url.match(/^\/\?spec/)) {
-        proxy.web(req, res, { target: 'http://localhost:' + config.applicationPort });
+        proxy.web(req, res, { target: 'http://localhost:' + config.appPort });
     } else {
         res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(config.indexHtml({files: config.files, proxyPort: config.proxyPort}));
+        res.write(config.indexHtml({
+            plugins       : config.plugins,
+            proxyPort     : config.proxyPort,
+            specs         : config.specs,
+            testInterface : config.testInterface
+        }));
         res.end();
     }
 });
 
-gutil.log('Server started at', gutil.colors.magenta('http://localhost:' + config.jasminePort));
+gutil.log('Server started at', gutil.colors.magenta('http://localhost:' + config.testPort));
 
-server.listen(config.jasminePort);
+server.listen(config.testPort);
 
 connect.createServer(
     connect.static(dir)

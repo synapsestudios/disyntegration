@@ -1,9 +1,9 @@
 function Iframe()
 {
-    this.$el = $('iframe#jasmine-iframe');
+    this.$el = $('iframe#test-iframe');
 
     if (this.$el.length == 0) {
-        this.$el = $('<iframe id="jasmine-iframe" style="width:0;height:0"></iframe>');
+        this.$el = $('<iframe id="test-iframe" style="width:0;height:0"></iframe>');
 
         $('body').prepend(this.$el);
     }
@@ -15,8 +15,7 @@ function Iframe()
         isReady = true;
     };
 
-    this.setSrc = function(src)
-    {
+    this.setSrc = function(src) {
         this.$el.attr('src', src);
 
         isReady = false;
@@ -24,24 +23,21 @@ function Iframe()
 
     // https://github.com/ariya/phantomjs/issues/11289
 
-    var KeyboardEvent = function(name)
-    {
+    var KeyboardEvent = function(name) {
         var event = document.createEvent('KeyboardEvent');
         event.initEvent(name, true, false);
 
         return event;
     };
 
-    var MouseEvent = function(name)
-    {
+    var MouseEvent = function(name) {
         var event = document.createEvent('MouseEvents');
         event.initEvent(name, true, false);
 
         return event;
     };
 
-    this.click = function(selector)
-    {
+    this.click = function(selector) {
         var elements = this.find(selector);
 
         if (elements.length) {
@@ -57,8 +53,7 @@ function Iframe()
         return this;
     };
 
-    this.fillField = function(selector, text)
-    {
+    this.fillField = function(selector, text) {
         this.find(selector).val(text);
         this.find(selector)[0].dispatchEvent(new KeyboardEvent('focus'));
         this.find(selector)[0].dispatchEvent(new KeyboardEvent('keydown'));
@@ -70,26 +65,22 @@ function Iframe()
         return this;
     };
 
-    this.getBody = function()
-    {
+    this.getBody = function() {
         return this.find('html').html();
     };
 
-    this.find = function(selector)
-    {
+    this.find = function(selector) {
         return this.$el.contents().find(selector);
     };
 
-    this.hide = function()
-    {
+    this.hide = function() {
         this.$el.css('width', 0);
         this.$el.css('height', 0);
 
         return this;
     };
 
-    this.onBodyChange = function(done)
-    {
+    this.onBodyChange = function(done) {
         var self = this;
 
         if (! oldBody) {
@@ -104,8 +95,7 @@ function Iframe()
         }
     };
 
-    this.ready = function(callback)
-    {
+    this.ready = function(callback) {
         var self = this;
 
         if (! isReady) {
@@ -117,16 +107,14 @@ function Iframe()
         return this;
     };
 
-    this.show = function()
-    {
+    this.show = function() {
         this.$el.css('width', $(document).width());
         this.$el.css('height', $(document).height());
 
         return this;
     };
 
-    this.waitFor = function(condition, callback, maxTimeout)
-    {
+    this.waitFor = function(condition, callback, maxTimeout) {
         var maxTimeout, self;
 
         self = this;
@@ -143,14 +131,13 @@ function Iframe()
             setTimeout(function() { self.waitFor(condition, callback, maxTimeout - 100) }, 100);
         }
     };
-}
+};
 
-function visit(path)
-{
+function visit(path) {
     var iframe = new Iframe();
 
     iframe.setSrc(document.location.origin + path)
 
     return iframe;
-}
+};
 

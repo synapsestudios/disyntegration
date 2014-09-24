@@ -1,5 +1,6 @@
 specFiles:
-  - '__spec__/**/*[Ss]pec.js'
+  - '__specs__/**/*[Ss]pec.js'
 
-applicationPort: 9000
+appPort: 9000
 
+pluginFiles:

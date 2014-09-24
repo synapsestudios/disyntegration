@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Syntegration Spec Runner</title>
+
+        <link rel="stylesheet" type="text/css" href="http://localhost:<%= proxyPort %>/node_modules/mocha/mocha.css">
+
+        <script src="http://localhost:<%= proxyPort %>/node_modules/syntegration/node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="http://localhost:<%= proxyPort %>/node_modules/syntegration/node_modules/underscore/underscore.js"></script>
+
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/mocha/mocha.js"></script>
+        <script type="text/javascript"><script>mocha.setup('<%= testMode %>')</script></script>
+
+        <!-- Load plugin scripts -->
+        <% _.each(plugins, function(file) { %>
+            <script type="text/javascript" src="http://localhost:<%= proxyPort %>/<%= file %>"></script>
+        <% }) %>
+
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/syntegration/src/syntegration.js"></script>
+
+        <!-- Load spec files -->
+        <% _.each(specs, function(file) { %>
+            <script type="text/javascript" src="http://localhost:<%= proxyPort %>/<%= file %>"></script>
+        <% }) %>
+    </head>
+
+    <body>
+        <div id="mocha"></div>
+        <script>mocha.run();</script>
+    </body>
+</html>

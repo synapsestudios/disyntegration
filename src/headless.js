@@ -16,8 +16,7 @@ console = {
     error : function() {}
 }
 
-var finished = function()
-{
+var finished = function() {
     return page.evaluate(function() {
         banner = document.getElementsByClassName('banner')[0];
 
@@ -29,22 +28,19 @@ var finished = function()
     });
 };
 
-var success = function()
-{
+var success = function() {
     return page.evaluate(function(){
         return document.getElementsByClassName('failed').length == 0;
     })
 };
 
-var results = function()
-{
+var results = function() {
     return page.evaluate(function(){
         return document.getElementsByClassName('bar')[0].innerText;
     })
 };
 
-var process = function()
-{
+var process = function() {
     if (args.screenshot) {
         page.render(args.screenshot);
     }
