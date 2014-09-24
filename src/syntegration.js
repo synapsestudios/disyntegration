@@ -13,9 +13,9 @@ function Iframe()
 
     this.$el[0].onload = function() {
         isReady = true;
-    }
+    };
 
-    this.setSrc = function (src)
+    this.setSrc = function(src)
     {
         this.$el.attr('src', src);
 
@@ -67,14 +67,41 @@ function Iframe()
         this.find(selector)[0].dispatchEvent(new KeyboardEvent('change'));
         this.find(selector)[0].dispatchEvent(new KeyboardEvent('keyup'));
 
-        isReady = false;
-
         return this;
+    };
+
+    this.getBody = function()
+    {
+        return this.find('html').html();
     };
 
     this.find = function(selector)
     {
         return this.$el.contents().find(selector);
+    };
+
+    this.hide = function()
+    {
+        this.$el.css('width', 0);
+        this.$el.css('height', 0);
+
+        return this;
+    };
+
+    this.onBodyChange = function(done)
+    {
+        var self = this;
+
+        if (! oldBody) {
+            oldBody = this.getBody();
+        }
+
+        if (oldBody == this.getBody()) {
+            setTimeout(function() { self.onBodyChange(done) }, 200);
+        } else {
+            oldBody = undefined;
+            done();
+        }
     };
 
     this.ready = function(callback)
@@ -86,6 +113,14 @@ function Iframe()
         } else {
             callback();
         }
+
+        return this;
+    };
+
+    this.show = function()
+    {
+        this.$el.css('width', $(document).width());
+        this.$el.css('height', $(document).height());
 
         return this;
     };
@@ -108,42 +143,6 @@ function Iframe()
             setTimeout(function() { self.waitFor(condition, callback, maxTimeout - 100) }, 100);
         }
     };
-
-    this.onBodyChange = function(done)
-    {
-        var self = this;
-
-        if (! oldBody) {
-            oldBody = this.getBody();
-        }
-
-        if (oldBody == this.getBody()) {
-            setTimeout(function() { self.onBodyChange(done) }, 200);
-        } else {
-            oldBody = undefined;
-            done();
-        }
-    };
-
-    this.show = function()
-    {
-        this.$el.css('width', $(document).width());
-        this.$el.css('height', $(document).height());
-
-        return this;
-    };
-
-    this.hide = function()
-    {
-        this.$el.css('width', 0);
-        this.$el.css('height', 0);
-
-        return this;
-    };
-
-    this.getBody = function() {
-        return this.find('html').html();
-    }
 }
 
 function visit(path)
