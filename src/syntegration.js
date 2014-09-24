@@ -2,7 +2,7 @@ function Iframe()
 {
     this.$el = $('iframe#jasmine-iframe');
 
-    if(this.$el.length == 0) {
+    if (this.$el.length == 0) {
         this.$el = $('<iframe id="jasmine-iframe" style="width:0;height:0"></iframe>');
 
         $('body').prepend(this.$el);
@@ -53,6 +53,8 @@ function Iframe()
                 isReady = false;
             }
         }
+
+        return this;
     };
 
     this.fillField = function(selector, text)
@@ -66,6 +68,8 @@ function Iframe()
         this.find(selector)[0].dispatchEvent(new KeyboardEvent('keyup'));
 
         isReady = false;
+
+        return this;
     };
 
     this.find = function(selector)
@@ -82,6 +86,8 @@ function Iframe()
         } else {
             callback();
         }
+
+        return this;
     };
 
     this.waitFor = function(condition, callback, maxTimeout)
@@ -108,10 +114,10 @@ function Iframe()
         var self = this;
 
         if (! oldBody) {
-            oldBody = this.body();
+            oldBody = this.getBody();
         }
 
-        if (oldBody == this.body()) {
+        if (oldBody == this.getBody()) {
             setTimeout(function() { self.onBodyChange(done) }, 200);
         } else {
             oldBody = undefined;
@@ -123,15 +129,19 @@ function Iframe()
     {
         this.$el.css('width', $(document).width());
         this.$el.css('height', $(document).height());
+
+        return this;
     };
 
     this.hide = function()
     {
         this.$el.css('width', 0);
         this.$el.css('height', 0);
+
+        return this;
     };
 
-    this.body = function() {
+    this.getBody = function() {
         return this.find('html').html();
     }
 }
