@@ -1,7 +1,7 @@
 var exec  = require('child_process').exec;
 var gulp  = require('gulp');
 var gutil = require('gulp-util');
-var sh    = require('../node_modules/execSync/index');
+var sh    = require('execSync');
 
 var config = require('../src/config');
 
