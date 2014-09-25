@@ -5,7 +5,7 @@ var sh    = require('execSync');
 
 var config = require('../src/config');
 
-gulp.task('desyntegrate', function() {
+gulp.task('disyntegrate', function() {
     var appProcess;
 
     gutil.log('Serving', gutil.colors.magenta(config.buildDir), 'on', gutil.colors.magenta('http://localhost:' + config.appPort));
