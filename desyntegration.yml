@@ -1,0 +1,15 @@
+appPort: 9000
+
+pluginFiles:
+
+proxyPort: 8888
+
+runner: jasmine
+
+# serverCommand:
+
+specFiles:
+    - '__specs__/**/*[Ss]pec.js'
+
+testMode: bdd
+testPort: 9001

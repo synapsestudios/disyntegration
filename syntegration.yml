@@ -1,6 +1,0 @@
-specFiles:
-  - '__specs__/**/*[Ss]pec.js'
-
-appPort: 9000
-
-pluginFiles:

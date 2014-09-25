@@ -13,7 +13,7 @@ gulp.task('desyntegrate', function() {
         });
     }
 
-    sh.run('node node_modules/syntegration/src/server.js');
+    sh.run('node node_modules/desyntegration/src/server.js');
 });
 
 gulp.task('desyntegrate:ci', function(cb) {
@@ -26,14 +26,14 @@ gulp.task('desyntegrate:ci', function(cb) {
         });
     }
 
-    testProcess = exec('node node_modules/syntegration/src/server.js', function(err, stdout, stderr) {
+    testProcess = exec('node node_modules/desyntegration/src/server.js', function(err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
     });
 
     phantomCommand = 'phantomjs';
 
-    phantomCommand += ' node_modules/syntegration/src/headless.js';
+    phantomCommand += ' node_modules/desyntegration/src/headless.js';
 
     phantomCommand += ' --port=' + config.testPort;
     if (gutil.env.screenshot) {
