@@ -20,7 +20,7 @@ gulp.task('disyntegrate', function() {
     sh.run('node node_modules/disyntegration/src/test-server.js');
 });
 
-gulp.task('desyntegrate:ci', function(cb) {
+gulp.task('disyntegrate:ci', function(cb) {
     var appProcess, code, phantomCommand, testProcess;
 
     appProcess = exec('node node_modules/disyntegration/src/app-server.js', function(err, stdout, stderr) {
