@@ -6,8 +6,9 @@
     "type" : "git",
     "url"  : "https://github.com/synapsestudios/disyntegration.git"
   },
-  "description": "Disyntegration Tests",
-  "dependencies": {
+  "description"    : "Disyntegration Tests",
+  "readmeFilename" : "README.md",
+  "dependencies"   : {
     "connect"                      : "2.14.3",
     "connect-history-api-fallback" : "0.0.4",
     "execSync"                     : "1.0.2",

@@ -3,6 +3,8 @@ var page           = require('webpage').create();
 var phantomConsole = console;
 var system         = require('system');
 
+require('jquery');
+
 var url;
 
 system.args.forEach(function(arg, index) {

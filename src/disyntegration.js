@@ -41,13 +41,7 @@ function Iframe()
         var elements = this.find(selector);
 
         if (elements.length) {
-            elements[0].dispatchEvent(new MouseEvent('click'));
-            elements[0].dispatchEvent(new MouseEvent('mousedown'));
-            elements[0].dispatchEvent(new MouseEvent('mouseup'));
-
-            if ($(elements[0]).attr('href')) {
-                isReady = false;
-            }
+            elements[0].click();
         }
 
         return this;
@@ -140,4 +134,3 @@ function visit(path) {
 
     return iframe;
 };
-
