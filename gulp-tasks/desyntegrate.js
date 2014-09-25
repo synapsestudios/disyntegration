@@ -6,27 +6,29 @@ var sh    = require('../node_modules/execSync/index');
 var config = require('../src/config');
 
 gulp.task('desyntegrate', function() {
-    if(config.serverCommand) {
-        exec(config.serverCommand, function(err, stdout, stderr) {
-            console.log(stdout);
-            console.log(stderr);
-        });
-    }
+    var appProcess;
 
-    sh.run('node node_modules/desyntegration/src/server.js');
+    gutil.log('Serving', gutil.colors.magenta(config.buildDir), 'on', gutil.colors.magenta('http://localhost:' + config.appPort));
+
+    appProcess = exec('node node_modules/desyntegration/src/app-server.js', function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+    });
+
+    gutil.log(gutil.colors.red('Desyntegrating'), 'on', gutil.colors.magenta('http://localhost:' + config.testPort));
+
+    sh.run('node node_modules/desyntegration/src/test-server.js');
 });
 
 gulp.task('desyntegrate:ci', function(cb) {
-    var code, phantomCommand, serverProcess, testProcess;
+    var appProcess, code, phantomCommand, testProcess;
 
-    if (config.serverCommand) {
-        serverProcess = exec(config.serverCommand, function(err, stdout, stderr) {
-            console.log(stdout);
-            console.log(stderr);
-        });
-    }
+    appProcess = exec('node node_modules/desyntegration/src/app-server.js', function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+    });
 
-    testProcess = exec('node node_modules/desyntegration/src/server.js', function(err, stdout, stderr) {
+    testProcess = exec('node node_modules/desyntegration/src/test-server.js', function(err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
     });
@@ -46,10 +48,7 @@ gulp.task('desyntegrate:ci', function(cb) {
 
     code = sh.run(phantomCommand);
 
-    if (serverProcess) {
-        serverProcess.kill();
-    }
-
+    appProcess.kill();
     testProcess.kill();
 
     if (code !== 0) {
