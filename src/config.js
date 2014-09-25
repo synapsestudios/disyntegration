@@ -5,7 +5,7 @@ var yaml = require('js-yaml');
 
 var configYaml, runner;
 
-configYaml = yaml.safeLoad(fs.readFileSync('desyntegration.yml', 'utf8'));
+configYaml = yaml.safeLoad(fs.readFileSync('disyntegration.yml', 'utf8'));
 runner     = configYaml.runner || 'jasmine';
 
 module.exports            = configYaml;

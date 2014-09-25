@@ -2,13 +2,13 @@
 <html>
     <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Desyntegration Spec Runner</title>
+        <title>Disyntegration Spec Runner</title>
 
         <link rel="shortcut icon" type="image/png" href="http://localhost:<%= proxyPort %>/node_modules/mocha/images/ok.png">
         <link rel="stylesheet" type="text/css" href="http://localhost:<%= proxyPort %>/node_modules/mocha/mocha.css">
 
-        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/desyntegration/node_modules/jquery/dist/jquery.min.js"></script>
-        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/desyntegration/node_modules/underscore/underscore.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/disyntegration/node_modules/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/disyntegration/node_modules/underscore/underscore.js"></script>
 
         <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/mocha/mocha.js"></script>
         <script type="text/javascript">mocha.setup('<%= testMode %>');</script>
@@ -18,7 +18,7 @@
             <script type="text/javascript" src="http://localhost:<%= proxyPort %>/<%= file %>"></script>
         <% }) %>
 
-        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/desyntegration/src/desyntegration.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/disyntegration/src/disyntegration.js"></script>
 
         <!-- Load spec files -->
         <% _.each(specs, function(file) { %>
