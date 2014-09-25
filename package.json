@@ -16,7 +16,6 @@
     "http-proxy"     : "1.0.2",
     "jquery"         : "2.1.0",
     "js-yaml"        : "3.0.2",
-    "server-static"  : "1.6.3",
     "underscore"     : "1.6.0"
   },
   "peerDependencies" : {
