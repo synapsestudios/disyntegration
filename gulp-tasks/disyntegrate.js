@@ -15,7 +15,7 @@ gulp.task('disyntegrate', function() {
         console.log(stderr);
     });
 
-    gutil.log(gutil.colors.red('Desyntegrating'), 'on', gutil.colors.magenta('http://localhost:' + config.testPort));
+    gutil.log(gutil.colors.red('Disyntegrating'), 'on', gutil.colors.magenta('http://localhost:' + config.testPort));
 
     sh.run('node node_modules/disyntegration/src/test-server.js');
 });
