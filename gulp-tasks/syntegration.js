@@ -17,7 +17,7 @@ gulp.task('syntegration', function() {
 });
 
 gulp.task('syntegration:ci', function(cb) {
-    var code, jsProcess, headlessOptions, phantomCommand, serverProcess;
+    var code, jsProcess, headlessOptions, serverProcess;
 
     if (config.serverCommand) {
         serverProcess = exec(config.serverCommand, function(err, stdout, stderr) {
@@ -31,11 +31,7 @@ gulp.task('syntegration:ci', function(cb) {
         console.log(stderr);
     });
 
-    phantomCommand  = 'phantomjs';
-    phantomCommand += ' --disk-cache=false';
-    phantomCommand += ' --local-to-remote-url-access=true';
-
-    headlessOptions = '';
+    headlessOptions = ' --port=' + config.testPort;
     if (gutil.env.screenshot) {
         headlessOptions += ' --screenshot=' + gutil.env.screenshot;
     }
@@ -44,7 +40,7 @@ gulp.task('syntegration:ci', function(cb) {
         headlessOptions += ' --trace=' + gutil.env.trace;
     }
 
-    code = sh.run(phantomCommand + ' node_modules/syntegration/src/headless.js' + headlessOptions);
+    code = sh.run('phantomjs --web-security=no node_modules/syntegration/src/headless.js' + headlessOptions);
 
     if (serverProcess) {
         serverProcess.kill();

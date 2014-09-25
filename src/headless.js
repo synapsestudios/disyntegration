@@ -3,13 +3,15 @@ var page           = require('webpage').create();
 var phantomConsole = console;
 var system         = require('system');
 
-var url = 'http://localhost:9001';
+var url;
 
 system.args.forEach(function(arg, index) {
     if (index > 0) {
         args[arg.split('=')[0].replace(/^--/, '')] = arg.split('=')[1];
     }
 });
+
+url = 'http://localhost:' + args.port;
 
 if (! args.trace) {
     console = {
@@ -61,7 +63,6 @@ var process = function() {
 
     if (finished()) {
         phantomConsole.log(results());
-        phantomConsole.log(summary());
 
         if(success()) {
             phantom.exit(0);

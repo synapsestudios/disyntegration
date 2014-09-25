@@ -1,5 +1,4 @@
 var connect   = require('connect');
-var dir       = process.cwd();
 var fs        = require('fs');
 var gutil     = require('gulp-util');
 var http      = require('http');
@@ -7,6 +6,8 @@ var httpProxy = require('http-proxy');
 var proxy     = httpProxy.createProxyServer({});
 
 var config = require('./config');
+
+var dir = process.cwd();
 
 var server = http.createServer(function(req, res) {
     res.loadFile = function(filePath, contentType) {
