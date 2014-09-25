@@ -4,10 +4,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Syntegration Spec Runner</title>
 
+        <link rel="shortcut icon" type="image/png" href="http://localhost:<%= proxyPort %>/node_modules/mocha/images/ok.png">
         <link rel="stylesheet" type="text/css" href="http://localhost:<%= proxyPort %>/node_modules/mocha/mocha.css">
 
-        <script src="http://localhost:<%= proxyPort %>/node_modules/syntegration/node_modules/jquery/dist/jquery.min.js"></script>
-        <script src="http://localhost:<%= proxyPort %>/node_modules/syntegration/node_modules/underscore/underscore.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/syntegration/node_modules/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/syntegration/node_modules/underscore/underscore.js"></script>
 
         <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/mocha/mocha.js"></script>
         <script type="text/javascript">mocha.setup('<%= testMode %>');</script>
@@ -27,6 +28,12 @@
 
     <body>
         <div id="mocha"></div>
-        <script type="text/javascript">mocha.run();</script>
+        <script type="text/javascript">
+            var failed = mocha.run();
+
+            if (failed) {
+                $('link[rel="shortcut icon"]').attr('href', 'http://localhost:<%= proxyPort %>/node_modules/mocha/images/error.png');
+            }
+        </script>
     </body>
 </html>

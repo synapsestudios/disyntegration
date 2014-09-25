@@ -20,6 +20,27 @@ if (! args.trace) {
     };
 }
 
+page.onError = function(msg, trace) {
+    var msgStack = ['ERROR: ' + msg];
+
+    if (trace && trace.length) {
+        msgStack.push('TRACE:');
+
+        trace.forEach(function(t) {
+            msgStack.push(' -> ' + t.file + ': ' + t.line + (t.function ? ' (in function "' + t.function +'")' : ''));
+        });
+    }
+
+    console.error(msgStack.join('\n'));
+
+};
+
+var duration = function() {
+    return page.evaluate(function(){
+        return document.getElementsByClassName('duration')[0].innerText;
+    })
+};
+
 var failures = function() {
     return page.evaluate(function(){
         return document.getElementsByClassName('failures')[0].innerText;
@@ -62,7 +83,7 @@ var process = function() {
     }
 
     if (finished()) {
-        phantomConsole.log(results());
+        phantomConsole.log(results() + ' ' + duration());
 
         if(success()) {
             phantom.exit(0);
