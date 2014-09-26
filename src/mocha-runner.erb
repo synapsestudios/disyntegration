@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Disyntegration Spec Runner</title>
 
-        <link rel="shortcut icon" type="image/png" href="http://localhost:<%= proxyPort %>/node_modules/mocha/images/ok.png">
+        <link rel="shortcut icon" type="image/png" href="http://localhost:<%= proxyPort %>/node_modules/disyntegration/images/favicon.png">
         <link rel="stylesheet" type="text/css" href="http://localhost:<%= proxyPort %>/node_modules/mocha/mocha.css">
 
         <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/disyntegration/node_modules/jquery/dist/jquery.min.js"></script>
@@ -27,12 +27,6 @@
 
     <body>
         <div id="mocha"></div>
-        <script type="text/javascript">
-            var failed = mocha.run();
-
-            if (failed) {
-                $('link[rel="shortcut icon"]').attr('href', 'http://localhost:<%= proxyPort %>/node_modules/mocha/images/error.png');
-            }
-        </script>
+        <script type="text/javascript">mocha.run();</script>
     </body>
 </html>
