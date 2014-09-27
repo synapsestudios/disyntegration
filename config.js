@@ -4,34 +4,29 @@ var glob = require('glob');
 var os   = require('os');
 var yaml = require('js-yaml');
 
-var configYaml, testRunner, yamlFile;
+var config,
+    configYaml,
+    defaultYaml;
 
-yamlFile = fs.readFileSync(process.cwd() + '/disyntegration.yml', 'utf8');
+configYaml  = fs.readFileSync(process.cwd() + '/disyntegration.yml', 'utf8');
+defaultYaml = fs.readFileSync(__dirname + '/disyntegration.yml', 'utf8');
 
-if (! yamlFile) {
-    yamlFile = fs.readFileSync(__dirname + '/disyntegration.yml', 'utf8');
+config = yaml.safeLoad(defaultYaml);
+if (configYaml) {
+    _.extend(config, yaml.safeLoad(configYaml));
 }
 
-configYaml = yaml.safeLoad(yamlFile);
-testRunner = configYaml.testRunner || 'jasmine';
-
-module.exports            = configYaml;
+module.exports            = config;
 module.exports.runnerHtml = _.template(
-    fs.readFileSync(__dirname + '/templates/' + testRunner + '.erb', 'utf8')
+    fs.readFileSync(__dirname + '/templates/' + config.testRunner + '.erb', 'utf8')
 );
 
-module.exports.appPort    = configYaml.appPort || 8888;
-module.exports.appDir     = configYaml.appDir || 'build';
 module.exports.buildDir   = os.tmpdir() + '/disyntegration';
-module.exports.mochaMode  = configYaml.mochaMode || 'bdd';
 module.exports.plugins    = [];
-module.exports.proxyPort  = configYaml.testProxy || 8889;
-module.exports.testRunner = testRunner;
 module.exports.specs      = [];
-module.exports.testPort   = configYaml.testPort || 9002;
 
-_.each(configYaml.pluginFiles, function(fileGlob) {
-    var files = glob.sync(process.cwd() + fileGlob);
+_.each(config.pluginFiles, function(fileGlob) {
+    var files = glob.sync(process.cwd() + '/' + fileGlob);
 
     if (files.length) {
         _.each(files, function(file) {
@@ -42,17 +37,15 @@ _.each(configYaml.pluginFiles, function(fileGlob) {
         });
     } else {
         module.exports.plugins.push({
-            path : fileGlob,
+            path : process.cwd() + '/' + fileGlob,
             name : fileGlob.split('/').pop()
         });
     }
 });
 
 // Look for spec files in the current path
-_.each(configYaml.specFiles, function(fileGlob) {
+_.each(config.specFiles, function(fileGlob) {
     _.each(glob.sync(process.cwd() + fileGlob), function(file) {
         module.exports.specs.push(file);
     });
 });
-
-console.log(config.specFiles);
