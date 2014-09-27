@@ -24,8 +24,6 @@ copyFile = function(path, name) {
         .pipe(fs.createWriteStream(config.buildDir + '/' + name));
 }
 
-packages = packages.concat(config.specs);
-
 bundle = browserify({
         basedir      : process.cwd(),
         debug        : true,

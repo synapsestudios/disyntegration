@@ -54,3 +54,5 @@ _.each(configYaml.specFiles, function(fileGlob) {
         module.exports.specs.push(file);
     });
 });
+
+console.log(config.specFiles);
