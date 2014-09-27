@@ -48,7 +48,7 @@ rebundle = function() {
         copyFile(__dirname + '/../images/favicon.png', 'favicon.png');
         copyFile(__dirname + '/../node_modules/jquery/dist/jquery.js', 'jquery.js');
 
-        switch (config.runner) {
+        switch (config.testRunner) {
             case 'assert' :
                 break;
             case 'jasmine' :

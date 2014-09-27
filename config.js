@@ -17,7 +17,7 @@ testRunner = configYaml.testRunner || 'jasmine';
 
 module.exports            = configYaml;
 module.exports.runnerHtml = _.template(
-    fs.readFileSync(__dirname + '/templates/' + runner + '.erb', 'utf8')
+    fs.readFileSync(__dirname + '/templates/' + testRunner + '.erb', 'utf8')
 );
 
 module.exports.appPort    = configYaml.appPort || 8888;
