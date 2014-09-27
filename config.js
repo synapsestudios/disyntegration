@@ -47,7 +47,6 @@ _.each(configYaml.pluginFiles, function(fileGlob) {
         });
     }
 });
-console.log(module.exports.plugins);
 
 // Look for spec files in the current path
 _.each(configYaml.specFiles, function(fileGlob) {
