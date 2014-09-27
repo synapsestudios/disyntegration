@@ -22,7 +22,7 @@ module.exports.runnerHtml = _.template(
 
 module.exports.appPort    = configYaml.appPort || 8888;
 module.exports.appDir     = configYaml.appDir || 'build';
-module.exports.buildDir   = os.tempdir() + '/disyntegration';
+module.exports.buildDir   = os.tmpdir() + '/disyntegration';
 module.exports.mochaMode  = configYaml.mochaMode || 'bdd';
 module.exports.plugins    = [];
 module.exports.proxyPort  = configYaml.testProxy || 8889;
