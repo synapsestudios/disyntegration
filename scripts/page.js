@@ -142,3 +142,6 @@ Page.prototype.show = function(callback) {
     console.error('Page.show is has been deprecated as of v0.3.0. Please use the --visible flag.');
     this.waitForReady(callback);
 };
+
+module.exports = Page;
+window.Page    = module.exports;

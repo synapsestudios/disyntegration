@@ -1,3 +1,4 @@
+var _         = require('underscore');
 var connect   = require('connect');
 var fs        = require('fs');
 var http      = require('http');
@@ -34,7 +35,7 @@ server = http.createServer(function(request, response) {
         });
 
         response.write(config.runnerHtml({
-            plugins   : config.plugins,
+            plugins   : _.pluck(config.plugins, 'name'),
             mochaMode : config.mochaMode,
             proxyPort : config.proxyPort,
             specs     : config.specs,
@@ -51,5 +52,5 @@ server = http.createServer(function(request, response) {
 server.listen(config.testPort);
 
 connect.createServer(
-    connect.static(process.cwd())
+    connect.static(process.cwd() + '/node_modules/disyntegration/build')
 ).listen(config.proxyPort);

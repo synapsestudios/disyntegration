@@ -31,6 +31,8 @@ logOutput = function(error, stdout, stderr) {
     }
 };
 
+childProcess.exec(__dirname + '/bundle.js', logOutput);
+
 appCommand     = 'node node_modules/disyntegration/scripts/app-server.js';
 phantomCommand = 'phantomjs node_modules/disyntegration/scripts/phantom.js';
 testCommand    = 'node node_modules/disyntegration/scripts/test-server.js';
@@ -60,7 +62,7 @@ if ('ci' in args) {
 
     phantomCommand += ' --port=' + config.testPort;
 
-    if (('screenshot' in args) || 'visible' in arg) {
+    if ('screenshot' in args) {
         phantomCommand += (
             ' --screenshot' +
             (typeof args.screenshot === 'string' ?

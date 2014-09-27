@@ -4,21 +4,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Disyntegration Spec Runner</title>
 
-        <link rel="shortcut icon" type="image/png" href="http://localhost:<%= proxyPort %>/node_modules/disyntegration/images/favicon.png">
-        <link rel="stylesheet" type="text/css" href="http://localhost:<%= proxyPort %>/node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+        <link rel="shortcut icon" type="image/png" href="http://localhost:<%= proxyPort %>/favicon.png">
+        <link rel="stylesheet" type="text/css" href="http://localhost:<%= proxyPort %>/jasmine.css">
 
-        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/disyntegration/node_modules/jquery/dist/jquery.min.js"></script>
-
-        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
-        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
-        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/jquery.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/jasmine.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/jasmine-html.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/boot.js"></script>
 
         <!-- Load plugin scripts -->
         <% _.each(plugins, function(file) { %>
             <script type="text/javascript" src="http://localhost:<%= proxyPort %>/<%= file %>"></script>
         <% }) %>
 
-        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/disyntegration/scripts/page.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/specs.js"></script>
+    </head>
+
+    <body>
         <script type="text/javascript">
             function visit(path) {
                 var page = new Page(<%= visible %>);
@@ -28,12 +30,5 @@
                 return page;
             };
         </script>
-
-        <!-- Load spec scripts -->
-        <% _.each(specs, function(file) { %>
-            <script type="text/javascript" src="http://localhost:<%= proxyPort %>/<%= file %>"></script>
-        <% }) %>
-    </head>
-
-    <body></body>
+    </body>
 </html>

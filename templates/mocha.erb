@@ -4,20 +4,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Disyntegration Spec Runner</title>
 
-        <link rel="shortcut icon" type="image/png" href="http://localhost:<%= proxyPort %>/node_modules/disyntegration/images/favicon.png">
-        <link rel="stylesheet" type="text/css" href="http://localhost:<%= proxyPort %>/node_modules/mocha/mocha.css">
+        <link rel="shortcut icon" type="image/png" href="http://localhost:<%= proxyPort %>/favicon.png">
+        <link rel="stylesheet" type="text/css" href="http://localhost:<%= proxyPort %>/mocha.css">
 
-        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/disyntegration/node_modules/jquery/dist/jquery.min.js"></script>
-
-        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/mocha/mocha.js"></script>
-        <script type="text/javascript">mocha.setup('<%= mochaMode %>');</script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/jquery.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/mocha.js"></script>
 
         <!-- Load plugin scripts -->
         <% _.each(plugins, function(file) { %>
             <script type="text/javascript" src="http://localhost:<%= proxyPort %>/<%= file %>"></script>
         <% }) %>
 
-        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/disyntegration/scripts/page.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/specs.js"></script>
+        <script type="text/javascript">mocha.setup('<%= mochaMode %>');</script>
+    </head>
+
+    <body>
+        <div id="mocha"></div>
         <script type="text/javascript">
             function visit(path) {
                 var page = new Page(<%= visible %>);
@@ -26,16 +29,8 @@
 
                 return page;
             };
+
+            mocha.run();
         </script>
-
-        <!-- Load spec files -->
-        <% _.each(specs, function(file) { %>
-            <script type="text/javascript" src="http://localhost:<%= proxyPort %>/<%= file %>"></script>
-        <% }) %>
-    </head>
-
-    <body>
-        <div id="mocha"></div>
-        <script type="text/javascript">mocha.run();</script>
     </body>
 </html>
