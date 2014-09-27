@@ -1,8 +1,9 @@
+#!/usr/bin/env node
 var chalk        = require('chalk');
 var childProcess = require('child_process');
 var execSync     = require('execSync');
 
-var config = require('./config');
+var config = require('../config');
 
 var appCommand,
     appProcess,
@@ -59,7 +60,7 @@ if ('ci' in args) {
 
     phantomCommand += ' --port=' + config.testPort;
 
-    if (('screenshot' in args) || 'visible' in args) {
+    if (('screenshot' in args) || 'visible' in arg) {
         phantomCommand += (
             ' --screenshot' +
             (typeof args.screenshot === 'string' ?

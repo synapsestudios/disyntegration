@@ -13,7 +13,7 @@ logOutput = function(error, stdout, stderr) {
     }
 };
 
-command = 'node node_modules/disyntegration/index.js';
+command = './node_modules/.bin/disyntegrate';
 
 gulp.task('disyntegrate', function() {
     if (gutil.env.visible) {

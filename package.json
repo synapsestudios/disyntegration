@@ -8,6 +8,9 @@
   },
   "description"    : "Disyntegration Tests",
   "readmeFilename" : "README.md",
+  "bin": {
+    "disyntegrate" : "./bin/disyntegrate.js"
+  },
   "dependencies"   : {
     "chalk"                        : "0.5.1",
     "connect"                      : "2.14.3",
