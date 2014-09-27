@@ -4,13 +4,15 @@ var del        = require('del');
 var fs         = require('fs');
 var watchify   = require('watchify');
 
-var config   = require('../config');
-var buildDir = __dirname + '/../build';
+var config = require('../config');
 
-var bundle, copyFile, packages, rebundle;
+var bundle,
+    copyFile,
+    packages,
+    rebundle;
 
 packages = [
-    './node_modules/disyntegration/scripts/page'
+    __dirname + '/../scripts/page'
 ];
 
 copyFile = function(path, name) {
@@ -19,7 +21,7 @@ copyFile = function(path, name) {
     }
 
     return fs.createReadStream(path)
-        .pipe(fs.createWriteStream(buildDir + '/' + name));
+        .pipe(fs.createWriteStream(config.buildDir + '/' + name));
 }
 
 packages = packages.concat(config.specs);
@@ -40,11 +42,11 @@ for (var i in config.specs) {
 watchify(bundle)
 
 rebundle = function() {
-    return del(buildDir, function() {
-        fs.mkdirSync(buildDir);
+    return del(config.buildDir, function() {
+        fs.mkdirSync(config.buildDir);
 
-        copyFile('./node_modules/disyntegration/images/favicon.png', 'favicon.png');
-        copyFile('./node_modules/disyntegration/node_modules/jquery/dist/jquery.js', 'jquery.js');
+        copyFile(__dirname + '/../images/favicon.png', 'favicon.png');
+        copyFile(__dirname + '/../node_modules/jquery/dist/jquery.js', 'jquery.js');
 
         switch (config.runner) {
             case 'assert' :
@@ -66,7 +68,7 @@ rebundle = function() {
         }
 
         bundle.bundle()
-            .pipe(fs.createWriteStream(buildDir + '/specs.js'));
+            .pipe(fs.createWriteStream(config.buildDir + '/specs.js'));
     });
 };
 

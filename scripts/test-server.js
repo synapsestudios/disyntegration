@@ -52,5 +52,5 @@ server = http.createServer(function(request, response) {
 server.listen(config.testPort);
 
 connect.createServer(
-    connect.static(process.cwd() + '/node_modules/disyntegration/build')
+    connect.static(config.buildDir)
 ).listen(config.proxyPort);
