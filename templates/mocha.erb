@@ -17,7 +17,16 @@
             <script type="text/javascript" src="http://localhost:<%= proxyPort %>/<%= file %>"></script>
         <% }) %>
 
-        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/disyntegration/src/page.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/disyntegration/scripts/page.js"></script>
+        <script type="text/javascript">
+            function visit(path) {
+                var visible;
+
+                visible = ('<%= visible %>' === 'true');
+
+                return new Page(visible).setSrc(document.location.origin + path);
+            };
+        </script>
 
         <!-- Load spec files -->
         <% _.each(specs, function(file) { %>
