@@ -9,6 +9,7 @@
   "description"    : "Disyntegration Tests",
   "readmeFilename" : "README.md",
   "dependencies"   : {
+    "chalk"                        : "0.5.1",
     "connect"                      : "2.14.3",
     "connect-history-api-fallback" : "0.0.4",
     "es5-shim"                     : "4.0.3",

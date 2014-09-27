@@ -1,19 +1,7 @@
-var myConsle = console;
-var system   = require('system');
-var webpage  = require('webpage');
+require('es5-shim');
 
-var args,
-    getDuration,
-    getFailures,
-    getResults,
-    getSummary,
-    page,
-    execute,
-    testsAreFinished,
-    testsWereSuccessful,
-    url;
-
-args = {};
+var args   = {};
+var system = require('system');
 
 system.args.forEach(function(arg, index) {
     if (index > 0) {
@@ -21,11 +9,27 @@ system.args.forEach(function(arg, index) {
     }
 });
 
+// Shim the process variable for chalk
+var process = {argv : system.args.join(' '), env : system.env};
+
+var chalk     = require('chalk');
+var myConsole = console;
+var webpage   = require('webpage');
+
+var execute,
+    getDuration,
+    getFailures,
+    getResults,
+    getSummary,
+    page,
+    testsAreFinished,
+    testsWereSuccessful,
+    url;
+
 page = webpage.create();
+url  = 'http://localhost:' + args.port;
 
-url = 'http://localhost:' + args.port;
-
-if (! args.trace) {
+if (! ('trace' in args)) {
     console = {
         log   : function() {},
         error : function() {}
@@ -33,16 +37,17 @@ if (! args.trace) {
 }
 
 page.onError = function(message, trace) {
-    var messages;
+    var messages, time;
 
-    messages = ['[ERROR] ' + message];
+    messages = ['[' + chalk.red(time) + '] ERROR:' + message];
+    time     = new Date().toString().split(' ')[4];
 
     if (trace && trace.length) {
-        messages.push('[TRACE]');
+        messages.push('[' + chalk.red(time) + '] TRACE:');
 
         trace.forEach(function(item) {
             messages.push(
-                ' -> ' + item.file + ': ' + item.line +
+                '[' + chalk.red(time) + '] -> ' + item.file + ': ' + item.line +
                 (item.function ? ' (in function "' + item.function +'")' : '')
             );
         });
@@ -59,7 +64,7 @@ getDuration = function() {
 
 getFailures = function() {
     return page.evaluate(function() {
-        return document.getElementsByClassName('getFailures')[0].innerText;
+        return document.getElementsByClassName('failures')[0].innerText;
     });
 };
 
@@ -94,21 +99,24 @@ testsAreFinished = function() {
 };
 
 execute = function() {
-    var results;
+    var results, time;
 
-    if (args.screenshot) {
-        page.render(args.screenshot);
+    if ('screenshot' in args) {
+        page.render(args.screenshot || 'disyntegrating.png');
     }
 
     if (testsAreFinished()) {
+        var time;
+
         results = getResults() + ' ' + getDuration();
+        time    = new Date().toString().split(' ')[4];
 
         if (testsWereSuccessful()) {
-            myConsle.log(results);
+            myConsole.log('[' + chalk.green(time) + ']', results);
             phantom.exit(0);
         } else {
-            myConsle.error(results);
-            myConsle.error(getFailures());
+            myConsole.error('[' + chalk.red(time) + ']', results);
+            console.error('[' + chalk.red(time) + ']', getFailures());
             phantom.exit(1);
         }
     } else {
@@ -118,11 +126,15 @@ execute = function() {
 
 setTimeout(function() {
     page.open(url, function(status) {
+        var time;
+
+        time = new Date().toString().split(' ')[4];
+
         if(status === 'success') {
-            myConsle.log('[INFO] Spec Runner loaded. Running specs.');
+            myConsole.log('[' + chalk.dim(time) + ']', 'Spec Runner loaded');
             execute();
         } else {
-            myConsle.error('[ERROR] Spec Runner not loaded');
+            myConsole.error('[' + chalk.red(time) + ']', 'Spec Runner not loaded');
             phantom.exit(1);
         }
     });

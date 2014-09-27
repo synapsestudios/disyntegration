@@ -35,10 +35,10 @@ server = http.createServer(function(request, response) {
 
         response.write(config.runnerHtml({
             plugins   : config.plugins,
+            mochaMode : config.mochaMode,
             proxyPort : config.proxyPort,
             specs     : config.specs,
-            testMode  : config.testMode,
-            visible   : process.argv[2] === '--visible'
+            visible   : (process.argv.join(' ').indexOf('--visible') !== -1)
         }));
 
         response.end();

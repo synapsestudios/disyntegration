@@ -21,11 +21,11 @@
         <script type="text/javascript" src="http://localhost:<%= proxyPort %>/node_modules/disyntegration/scripts/page.js"></script>
         <script type="text/javascript">
             function visit(path) {
-                var visible;
+                var page = new Page(<%= visible %>);
 
-                visible = ('<%= visible %>' === 'true');
+                page.setSrc(document.location.origin + path);
 
-                return new Page(visible).setSrc(document.location.origin + path);
+                return page;
             };
         </script>
 

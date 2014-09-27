@@ -16,10 +16,11 @@ module.exports.runnerHtml = _.template(
 // The localhost port your application will be running on
 module.exports.appPort   = configYaml.appPort || 8888;
 module.exports.buildDir  = configYaml.buildDir || 'build';
+module.exports.mochaMode = configYaml.mochaMode || 'bdd';
 module.exports.plugins   = [];
 module.exports.proxyPort = configYaml.testProxy || 8889;
+module.exports.runner     = runner;
 module.exports.specs     = [];
-module.exports.testMode  = configYaml.testMode || 'bdd';
 module.exports.testPort  = configYaml.testPort || 9002;
 
 _.each(configYaml.pluginFiles, function(fileGlob) {
