@@ -12,7 +12,7 @@ var bundle,
     rebundle;
 
 packages = [
-    __dirname + '/../scripts/page'
+
 ];
 
 copyFile = function(path, name) {
@@ -27,17 +27,15 @@ copyFile = function(path, name) {
 packages = packages.concat(config.specs);
 
 bundle = browserify({
+        basedir      : process.cwd(),
         debug        : true,
-        entries      : packages,
+        entries      : config.specs,
         extensions   : ['.js'],
         fullPaths    : true,
         cache        : {},
         packageCache : {}
-    });
-
-for (var i in config.specs) {
-    bundle.add(config.specs[i]);
-}
+    })
+    .add(__dirname + '/../scripts/page');
 
 watchify(bundle)
 
