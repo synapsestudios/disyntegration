@@ -33,9 +33,9 @@ logOutput = function(error, stdout, stderr) {
 
 childProcess.exec(__dirname + '/bundle.js', logOutput);
 
-appCommand     = 'node node_modules/disyntegration/scripts/app-server.js';
-phantomCommand = 'phantomjs node_modules/disyntegration/scripts/phantom.js';
-testCommand    = 'node node_modules/disyntegration/scripts/test-server.js';
+appCommand     = 'node ' + __dirname + '/../scripts/app-server.js';
+phantomCommand = 'phantomjs ' + __dirname + '/../scripts/phantom.js';
+testCommand    = 'node ' + __dirname + '/../scripts/test-server.js';
 time           = new Date().toString().split(' ')[4];
 
 if (('ci' in args) || ('visible' in args)) {
