@@ -45,7 +45,7 @@ _.each(config.pluginFiles, function(fileGlob) {
 
 // Look for spec files in the current path
 _.each(config.specFiles, function(fileGlob) {
-    _.each(glob.sync(process.cwd() + fileGlob), function(file) {
+    _.each(glob.sync(process.cwd() + '/' + fileGlob), function(file) {
         module.exports.specs.push(file);
     });
 });

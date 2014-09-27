@@ -1,4 +1,11 @@
 #!/usr/bin/env node
+var args = {};
+process.argv.forEach(function(arg, index) {
+    if (index > 1) {
+        args[arg.split('=')[0].replace(/^--/, '')] = arg.split('=')[1];
+    }
+});
+
 var chalk        = require('chalk');
 var childProcess = require('child_process');
 var execSync     = require('execSync');
@@ -7,20 +14,12 @@ var config = require('../config');
 
 var appCommand,
     appProcess,
-    args,
     logOutput,
     phantomCommand,
     phantomResult,
     testCommand,
     testProcess,
     time;
-
-args = {};
-process.argv.forEach(function(arg, index) {
-    if (index > 1) {
-        args[arg.split('=')[0].replace(/^--/, '')] = arg.split('=')[1];
-    }
-});
 
 logOutput = function(error, stdout, stderr) {
     console.log(stdout);

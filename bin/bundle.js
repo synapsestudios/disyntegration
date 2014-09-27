@@ -8,12 +8,7 @@ var config = require('../config');
 
 var bundle,
     copyFile,
-    packages,
     rebundle;
-
-packages = [
-
-];
 
 copyFile = function(path, name) {
     if (! name) {
@@ -25,9 +20,7 @@ copyFile = function(path, name) {
 }
 
 bundle = browserify({
-        basedir      : process.cwd(),
         debug        : true,
-        entries      : config.specs,
         extensions   : ['.js'],
         fullPaths    : true,
         cache        : {},
@@ -35,10 +28,14 @@ bundle = browserify({
     })
     .add(__dirname + '/../scripts/page');
 
+for (var i in config.specs) {
+    bundle.add(config.specs[i]);
+}
+
 watchify(bundle)
 
 rebundle = function() {
-    return del(config.buildDir, function() {
+    return del(config.buildDir, {force : true}, function() {
         fs.mkdirSync(config.buildDir);
 
         copyFile(__dirname + '/../images/favicon.png', 'favicon.png');
