@@ -9,7 +9,9 @@ configYaml = yaml.safeLoad(fs.readFileSync('disyntegration.yml', 'utf8'));
 runner     = configYaml.runner || 'jasmine';
 
 module.exports            = configYaml;
-module.exports.runnerHtml = _.template(fs.readFileSync(__dirname + '/' + runner + '-runner.erb', 'utf8'));
+module.exports.runnerHtml = _.template(
+    fs.readFileSync(__dirname + '/templates/' + runner + '.erb', 'utf8')
+);
 
 // The localhost port your application will be running on
 module.exports.appPort   = configYaml.appPort || 8888;
