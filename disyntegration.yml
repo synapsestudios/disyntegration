@@ -1,13 +1,11 @@
+appDir: build
 appPort: 8888
+mochaMode: bdd
+proxyPort: 8889
+testRunner: jasmine
+testPort: 9002
 
 pluginFiles:
 
-proxyPort: 8889
-
-runner: jasmine
-
 specFiles:
     - '__specs__/**/*[Ss]pec.js'
-
-testMode: bdd
-testPort: 9002

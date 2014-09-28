@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Disyntegration</title>
+
+        <link rel="shortcut icon" type="image/png" href="http://localhost:<%= proxyPort %>/favicon.png">
+        <link rel="stylesheet" type="text/css" href="http://localhost:<%= proxyPort %>/jasmine.css">
+
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/jquery.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/jasmine.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/jasmine-html.js"></script>
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/boot.js"></script>
+
+        <!-- Load plugin scripts -->
+        <% _.each(plugins, function(file) { %>
+            <script type="text/javascript" src="http://localhost:<%= proxyPort %>/<%= file %>"></script>
+        <% }) %>
+
+        <script type="text/javascript" src="http://localhost:<%= proxyPort %>/specs.js"></script>
+    </head>
+
+    <body>
+        <script type="text/javascript">
+            function visit(path) {
+                var page = new Page(<%= visible %>);
+
+                page.setSrc(document.location.origin + path);
+
+                return page;
+            };
+        </script>
+    </body>
+</html>
