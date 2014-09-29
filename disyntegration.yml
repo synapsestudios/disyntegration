@@ -1,6 +1,5 @@
 appDir: build
 appPort: 8888
-mochaMode: bdd
 proxyPort: 8889
 testRunner: jasmine
 testPort: 9002
