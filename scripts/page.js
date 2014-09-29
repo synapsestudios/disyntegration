@@ -101,7 +101,13 @@ Page.prototype.waitForBodyChange = function(callback, timeout) {
             oldBody = self.getBody();
         }
 
-        return oldBody !== self.getBody();
+        if (oldBody !== self.getBody()) {
+            oldBody = null;
+
+            return true;
+        }
+
+        return false;
     }, callback, timeout);
 };
 

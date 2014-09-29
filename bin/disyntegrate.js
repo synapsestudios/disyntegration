@@ -14,45 +14,58 @@ var config = require('../config');
 
 var appCommand,
     appProcess,
+    bundleCommand,
+    bundleProcess,
+    ci,
     logOutput,
     phantomCommand,
     phantomResult,
     testCommand,
     testProcess,
-    time;
+    time,
+    visible;
 
 logOutput = function(error, stdout, stderr) {
     console.log(stdout);
     console.log(stderr);
 
     if (error) {
-        console.log(error);
+        console.error(error);
     }
 };
 
-childProcess.exec(__dirname + '/bundle.js', logOutput);
+ci      = ('ci' in args);
+visible = ('visible' in args);
+
+bundleCommand = __dirname + '/bundle.js';
+
+if (ci) {
+    bundleCommand += ' --ci';
+}
+
+bundleProcess = childProcess.exec(bundleCommand, logOutput);
 
 appCommand     = 'node ' + __dirname + '/../scripts/app-server.js';
 phantomCommand = 'phantomjs ' + __dirname + '/../scripts/phantom.js';
 testCommand    = 'node ' + __dirname + '/../scripts/test-server.js';
 time           = new Date().toString().split(' ')[4];
 
-if (('ci' in args) || ('visible' in args)) {
+if (ci || visible) {
     testCommand += ' --visible';
 }
 
-if (! ('ci' in args)) {
+if (! ci) {
     console.log(
         "[%s] Serving %s on %s",
         chalk.dim(time),
-        chalk.magenta(config.buildDir),
+        chalk.magenta(config.appDir),
         chalk.magenta('http://localhost:' + config.appPort)
     );
 }
 
 appProcess = childProcess.exec(appCommand, logOutput);
 
-if ('ci' in args) {
+if (ci) {
     console.log(
         "[%s] %s",
         chalk.dim(time),
@@ -85,7 +98,7 @@ if ('ci' in args) {
     console.log(
         "[%s] %s on %s",
         chalk.dim(time),
-        chalk.red('Disyntegrating'),
+        chalk.red('Disyntegrating' + (visible ? ' Live' : '')),
         chalk.magenta('http://localhost:' + config.testPort)
     );
 

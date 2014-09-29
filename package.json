@@ -1,7 +1,7 @@
 {
   "name"       : "disyntegration",
   "license"    : "MIT",
-  "version"    : "0.3.0",
+  "version"    : "0.3.1",
   "repository" : {
     "type" : "git",
     "url"  : "https://github.com/synapsestudios/disyntegration.git"
@@ -12,7 +12,7 @@
     "disyntegrate" : "./bin/disyntegrate.js"
   },
   "dependencies"   : {
-    "browserify"                   : "5.10.1",
+    "browserify"                   : "5.12.1",
     "chalk"                        : "0.5.1",
     "connect"                      : "2.14.3",
     "connect-history-api-fallback" : "0.0.4",

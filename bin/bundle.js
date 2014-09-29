@@ -1,4 +1,11 @@
 #!/usr/bin/env node
+var args = {};
+process.argv.forEach(function(arg, index) {
+    if (index > 1) {
+        args[arg.split('=')[0].replace(/^--/, '')] = arg.split('=')[1];
+    }
+});
+
 var browserify = require('browserify');
 var del        = require('del');
 var fs         = require('fs');
@@ -20,6 +27,7 @@ copyFile = function(path, name) {
 }
 
 bundle = browserify({
+        basedir      : process.cwd(),
         debug        : true,
         extensions   : ['.js'],
         fullPaths    : true,
@@ -49,10 +57,6 @@ rebundle = function() {
                 copyFile('./node_modules/jasmine-core/lib/jasmine-core/jasmine.js', 'jasmine.js');
                 copyFile('./node_modules/jasmine-core/lib//jasmine-core/jasmine-html.js', 'jasmine-html.js');
                 copyFile('./node_modules/jasmine-core/lib//jasmine-core/boot.js', 'boot.js');
-                break;
-            case 'mocha' :
-                copyFile('./node_modules/mocha/mocha.css', 'mocha.css');
-                copyFile('./node_modules/mocha/mocha.js', 'mocha.js');
                 break;
         }
 
