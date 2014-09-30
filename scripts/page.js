@@ -30,6 +30,8 @@ Page.prototype.click = function(selector) {
 
     if (elements.length) {
         elements[0].click();
+    } else {
+        throw new Error('Cannot find element: "' + selector + '"');
     }
 
     return this;
@@ -44,13 +46,19 @@ KeyboardEvent = function(name) {
 };
 
 Page.prototype.fillField = function(selector, text) {
-    this.find(selector).val(text);
-    this.find(selector)[0].dispatchEvent(new KeyboardEvent('focus'));
-    this.find(selector)[0].dispatchEvent(new KeyboardEvent('keydown'));
-    this.find(selector)[0].dispatchEvent(new KeyboardEvent('keypress'));
-    this.find(selector)[0].dispatchEvent(new KeyboardEvent('input'));
-    this.find(selector)[0].dispatchEvent(new KeyboardEvent('change'));
-    this.find(selector)[0].dispatchEvent(new KeyboardEvent('keyup'));
+    var elements = this.find(selector);
+
+    if (elements.length) {
+        elements.val(text);
+        elements[0].dispatchEvent(new KeyboardEvent('focus'));
+        elements[0].dispatchEvent(new KeyboardEvent('keydown'));
+        elements[0].dispatchEvent(new KeyboardEvent('keypress'));
+        elements[0].dispatchEvent(new KeyboardEvent('input'));
+        elements[0].dispatchEvent(new KeyboardEvent('change'));
+        elements[0].dispatchEvent(new KeyboardEvent('keyup'));
+    } else {
+        throw new Error('Cannot find element: "' + selector + '"');
+    }
 
     return this;
 };
