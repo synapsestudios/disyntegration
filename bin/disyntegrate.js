@@ -38,7 +38,6 @@ ci      = ('ci' in args);
 visible = ('visible' in args);
 
 appCommand     = 'node ' + __dirname + '/../scripts/app-server.js';
-bundleCommand  = __dirname + '/bundle.js';
 phantomCommand = 'phantomjs ' + __dirname + '/../scripts/phantom.js';
 testCommand    = 'node ' + __dirname + '/../scripts/test-server.js';
 time           = new Date().toString().split(' ')[4];
@@ -75,9 +74,6 @@ if (ci) {
         phantomCommand += ' --trace';
     }
 
-    bundleCommand += ' --ci';
-
-    bundleProcess = execSync.run(bundleCommand, logOutput);
     testProcess   = childProcess.exec(testCommand, logOutput);
     phantomResult = execSync.run(phantomCommand);
 
@@ -94,8 +90,6 @@ if (ci) {
         chalk.red('Disyntegrating' + (visible ? ' Live' : '')),
         chalk.magenta('http://localhost:' + config.testPort)
     );
-
-    bundleProcess = childProcess.exec(bundleCommand, logOutput);
 
     process.on('exit', function() {
         appProcess.kill();

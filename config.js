@@ -21,7 +21,7 @@ module.exports.runnerHtml = _.template(
     fs.readFileSync(__dirname + '/templates/' + config.testRunner + '.erb', 'utf8')
 );
 
-module.exports.buildDir   = process.cwd() + '/spec';
+module.exports.buildDir   = process.cwd();
 module.exports.plugins    = [];
 module.exports.specs      = [];
 
