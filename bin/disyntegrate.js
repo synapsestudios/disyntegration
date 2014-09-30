@@ -43,10 +43,6 @@ phantomCommand = 'phantomjs ' + __dirname + '/../scripts/phantom.js';
 testCommand    = 'node ' + __dirname + '/../scripts/test-server.js';
 time           = new Date().toString().split(' ')[4];
 
-if (ci || visible) {
-    testCommand += ' --visible';
-}
-
 if (! ci) {
     console.log(
         "[%s] Serving %s on %s",
@@ -86,7 +82,8 @@ if (ci) {
     phantomResult = execSync.run(phantomCommand);
 
     process.on('exit', function() {
-        execSync.run('killall node');
+        appProcess.kill();
+        testProcess.kill();
     });
 
     process.exit(phantomResult);
@@ -101,7 +98,7 @@ if (ci) {
     bundleProcess = childProcess.exec(bundleCommand, logOutput);
 
     process.on('exit', function() {
-        execSync.run('killall node');
+        appProcess.kill();
     });
 
     execSync.run(testCommand);
