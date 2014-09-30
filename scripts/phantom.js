@@ -16,6 +16,8 @@ var chalk     = require('chalk');
 var myConsole = console;
 var webpage   = require('webpage');
 
+var DEFAULT_TIMEOUT = 3 * (1000 * 60);
+
 var execute,
     getDuration,
     getFailures,
@@ -139,3 +141,12 @@ setTimeout(function() {
         }
     });
 }, 200);
+
+setTimeout(function() {
+    var time;
+
+    time = new Date().toString().split(' ')[4];
+
+    myConsole.error('[' + chalk.red(time) + ']', 'Timeout exceeded');
+    phantom.exit(1);
+}, args.phantomTimeout || DEFAULT_TIMEOUT);
