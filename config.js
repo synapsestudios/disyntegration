@@ -21,7 +21,7 @@ module.exports.runnerHtml = _.template(
     fs.readFileSync(__dirname + '/templates/' + config.testRunner + '.erb', 'utf8')
 );
 
-module.exports.buildDir   = os.tmpdir() + '/disyntegration';
+module.exports.buildDir   = process.cwd() + '/node_modules/disyntegration/build';
 module.exports.plugins    = [];
 module.exports.specs      = [];
 
