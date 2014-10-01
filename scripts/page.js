@@ -157,5 +157,4 @@ Page.prototype.show = function(callback) {
     this.waitForReady(callback);
 };
 
-module.exports = Page;
-window.Page    = module.exports;
+window.Page = Page;

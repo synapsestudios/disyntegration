@@ -5,7 +5,7 @@ process.argv.forEach(function(arg, index) {
         args[arg.split('=')[0].replace(/^--/, '')] = arg.split('=')[1];
     }
 });
-
+console.log(args);
 var browserify = require('browserify');
 var del        = require('del');
 var fs         = require('fs');
@@ -14,6 +14,7 @@ var watchify   = require('watchify');
 var config = require('../config');
 
 var bundle,
+    bundler,
     copyFile,
     rebundle;
 
@@ -26,7 +27,7 @@ copyFile = function(path, name) {
         .pipe(fs.createWriteStream(config.buildDir + '/' + name));
 }
 
-bundle = browserify({
+bundler = browserify({
         basedir      : process.cwd(),
         debug        : true,
         extensions   : ['.js'],
@@ -37,38 +38,45 @@ bundle = browserify({
     .add(__dirname + '/../scripts/page');
 
 for (var i in config.specs) {
-    bundle.add(config.specs[i]);
+    bundler.add(config.specs[i]);
 }
 
-watchify(bundle)
-
-rebundle = function() {
-    return del(config.buildDir, {force : true}, function() {
+bundle = function() {
+    if (! fs.existsSync(config.buildDir)) {
         fs.mkdirSync(config.buildDir);
+    }
 
-        copyFile(__dirname + '/../images/favicon.png', 'favicon.png');
-        copyFile(__dirname + '/../node_modules/jquery/dist/jquery.js', 'jquery.js');
+    copyFile(__dirname + '/../images/favicon.png', 'favicon.png');
+    copyFile(__dirname + '/../node_modules/jquery/dist/jquery.js', 'jquery.js');
 
-        switch (config.testRunner) {
-            case 'assert' :
-                break;
-            case 'jasmine' :
-                copyFile('./node_modules/jasmine-core/lib/jasmine-core/jasmine.css', 'jasmine.css');
-                copyFile('./node_modules/jasmine-core/lib/jasmine-core/jasmine.js', 'jasmine.js');
-                copyFile('./node_modules/jasmine-core/lib//jasmine-core/jasmine-html.js', 'jasmine-html.js');
-                copyFile('./node_modules/jasmine-core/lib//jasmine-core/boot.js', 'boot.js');
-                break;
-        }
+    switch (config.testRunner) {
+        case 'assert' :
+            break;
+        case 'jasmine' :
+            copyFile('./node_modules/jasmine-core/lib/jasmine-core/jasmine.css', 'jasmine.css');
+            copyFile('./node_modules/jasmine-core/lib/jasmine-core/jasmine.js', 'jasmine.js');
+            copyFile('./node_modules/jasmine-core/lib//jasmine-core/jasmine-html.js', 'jasmine-html.js');
+            copyFile('./node_modules/jasmine-core/lib//jasmine-core/boot.js', 'boot.js');
+            break;
+    }
 
-        for (var i in config.plugins) {
-            copyFile(config.plugins[i].path, config.plugins[i].name);
-        }
+    for (var i in config.plugins) {
+        copyFile(config.plugins[i].path, config.plugins[i].name);
+    }
 
-        bundle.bundle()
-            .pipe(fs.createWriteStream(config.buildDir + '/specs.js'));
-    });
+    bundler.bundle()
+        .pipe(fs.createWriteStream(config.buildDir + '/specs.js'));
 };
 
-bundle.on('update', rebundle);
+if ('ci' in args) {
+    bundle();
+} else {
+    watchify(bundler);
 
-rebundle();
+    rebundle = function() {
+        return del(config.buildDir, {force : true}, bundle);
+    };
+
+    bundler.on('update', rebundle);
+    rebundle();
+}

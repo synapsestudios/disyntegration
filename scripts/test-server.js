@@ -35,7 +35,7 @@ server = http.createServer(function(request, response) {
         });
 
         response.write(config.runnerHtml({
-            plugins   : _.pluck(config.plugins, 'name'),
+            plugins   : config.plugins,
             proxyPort : config.proxyPort,
             specs     : config.specs,
             visible   : (process.argv.join(' ').indexOf('--visible') !== -1)

@@ -24,6 +24,8 @@ gulp.task('disyntegrate', function() {
 });
 
 gulp.task('disyntegrate:ci', function() {
+    var returnCode;
+
     command += ' --ci';
 
     if (gutil.env.screenshot) {
@@ -38,5 +40,7 @@ gulp.task('disyntegrate:ci', function() {
         command += ' --trace';
     }
 
-    execSync.run(command);
+    returnCode = execSync.run(command);
+
+    process.exit(returnCode);
 });

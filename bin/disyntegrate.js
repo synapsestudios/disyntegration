@@ -37,22 +37,10 @@ logOutput = function(error, stdout, stderr) {
 ci      = ('ci' in args);
 visible = ('visible' in args);
 
-bundleCommand = __dirname + '/bundle.js';
-
-if (ci) {
-    bundleCommand += ' --ci';
-}
-
-bundleProcess = childProcess.exec(bundleCommand, logOutput);
-
 appCommand     = 'node ' + __dirname + '/../scripts/app-server.js';
 phantomCommand = 'phantomjs ' + __dirname + '/../scripts/phantom.js';
 testCommand    = 'node ' + __dirname + '/../scripts/test-server.js';
 time           = new Date().toString().split(' ')[4];
-
-if (ci || visible) {
-    testCommand += ' --visible';
-}
 
 if (! ci) {
     console.log(
@@ -80,6 +68,8 @@ if (ci) {
             (typeof args.screenshot === 'string' ?
             ('=' + args.screenshot) : '')
         );
+
+        testCommand += ' --visible';
     }
 
     if ('trace' in args) {
@@ -90,7 +80,8 @@ if (ci) {
     phantomResult = execSync.run(phantomCommand);
 
     process.on('exit', function() {
-        execSync.run('killall node');
+        appProcess.kill();
+        testProcess.kill();
     });
 
     process.exit(phantomResult);
@@ -103,8 +94,12 @@ if (ci) {
     );
 
     process.on('exit', function() {
-        execSync.run('killall node');
+        appProcess.kill();
     });
+
+    if (visible) {
+        testCommand += ' --visible';
+    }
 
     execSync.run(testCommand);
 }
