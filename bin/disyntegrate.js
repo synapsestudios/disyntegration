@@ -68,6 +68,8 @@ if (ci) {
             (typeof args.screenshot === 'string' ?
             ('=' + args.screenshot) : '')
         );
+
+        testCommand += ' --visible';
     }
 
     if ('trace' in args) {
@@ -94,6 +96,10 @@ if (ci) {
     process.on('exit', function() {
         appProcess.kill();
     });
+
+    if (visible) {
+        testCommand += ' --visible';
+    }
 
     execSync.run(testCommand);
 }
