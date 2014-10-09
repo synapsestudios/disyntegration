@@ -14,8 +14,6 @@ var config = require('../config');
 
 var appCommand,
     appProcess,
-    bundleCommand,
-    bundleProcess,
     ci,
     logOutput,
     phantomCommand,
