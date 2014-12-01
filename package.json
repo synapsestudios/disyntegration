@@ -15,7 +15,7 @@
     "chalk"                        : "0.5.1",
     "connect"                      : "2.14.3",
     "connect-history-api-fallback" : "0.0.4",
-    "es5-shim"                     : "4.0.4",
+    "es5-shim"                     : "4.0.5",
     "execSync"                     : "1.0.2",
     "glob"                         : "3.2.9",
     "gulp-connect"                 : "2.0.6",
